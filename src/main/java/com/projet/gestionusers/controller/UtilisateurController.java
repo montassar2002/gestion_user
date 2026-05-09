@@ -31,6 +31,21 @@ public class UtilisateurController {
         return ResponseEntity.ok(utilisateurService.getActifs());
     }
 
+    @GetMapping("/inactifs")
+    public ResponseEntity<List<UtilisateurDTO>> getInactifs() {
+        return ResponseEntity.ok(utilisateurService.getInactifs());
+    }
+
+    @GetMapping("/recherche")
+    public ResponseEntity<List<UtilisateurDTO>> rechercherParNom(@RequestParam String nom) {
+        return ResponseEntity.ok(utilisateurService.rechercherParNom(nom));
+    }
+
+    @GetMapping("/role/{nomRole}")
+    public ResponseEntity<List<UtilisateurDTO>> rechercherParRole(@PathVariable String nomRole) {
+        return ResponseEntity.ok(utilisateurService.rechercherParRole(nomRole));
+    }
+
     @PostMapping
     public ResponseEntity<UtilisateurDTO> create(@Valid @RequestBody UtilisateurDTO dto) {
         return ResponseEntity.ok(utilisateurService.create(dto));
@@ -39,6 +54,11 @@ public class UtilisateurController {
     @PutMapping("/{id}")
     public ResponseEntity<UtilisateurDTO> update(@PathVariable int id, @Valid @RequestBody UtilisateurDTO dto) {
         return ResponseEntity.ok(utilisateurService.update(id, dto));
+    }
+
+    @PatchMapping("/{id}/toggle")
+    public ResponseEntity<UtilisateurDTO> toggleActif(@PathVariable int id) {
+        return ResponseEntity.ok(utilisateurService.toggleActif(id));
     }
 
     @DeleteMapping("/{id}")

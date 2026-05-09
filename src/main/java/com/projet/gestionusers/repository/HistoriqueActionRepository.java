@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface HistoriqueActionRepository extends JpaRepository<HistoriqueAction, Integer> {
     List<HistoriqueAction> findByUtilisateurIdUtilisateur(int idUtilisateur);
+    List<HistoriqueAction> findByAction(String action);
+    List<HistoriqueAction> findAllByOrderByDateDesc();
 }

@@ -27,6 +27,10 @@ public class PermissionService {
         return permissionMapper.toDto(p);
     }
 
+    public List<PermissionDTO> rechercherParNom(String nom) {
+        return permissionMapper.toListDto(permissionRepository.findByNomContaining(nom));
+    }
+
     public PermissionDTO create(PermissionDTO dto) {
         Permission p = permissionMapper.fromDto(dto);
         return permissionMapper.toDto(permissionRepository.save(p));

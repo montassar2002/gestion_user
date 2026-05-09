@@ -17,11 +17,16 @@ public class HistoriqueController {
 
     @GetMapping
     public ResponseEntity<List<HistoriqueAction>> getAll() {
-        return ResponseEntity.ok(historiqueRepository.findAll());
+        return ResponseEntity.ok(historiqueRepository.findAllByOrderByDateDesc());
     }
 
     @GetMapping("/utilisateur/{id}")
     public ResponseEntity<List<HistoriqueAction>> getByUtilisateur(@PathVariable int id) {
         return ResponseEntity.ok(historiqueRepository.findByUtilisateurIdUtilisateur(id));
+    }
+
+    @GetMapping("/action/{action}")
+    public ResponseEntity<List<HistoriqueAction>> getByAction(@PathVariable String action) {
+        return ResponseEntity.ok(historiqueRepository.findByAction(action));
     }
 }

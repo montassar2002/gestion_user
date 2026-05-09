@@ -26,6 +26,11 @@ public class RoleController {
         return ResponseEntity.ok(roleService.getById(id));
     }
 
+    @GetMapping("/recherche")
+    public ResponseEntity<List<RoleDTO>> rechercherParNom(@RequestParam String nom) {
+        return ResponseEntity.ok(roleService.rechercherParNom(nom));
+    }
+
     @PostMapping
     public ResponseEntity<RoleDTO> create(@Valid @RequestBody RoleDTO dto) {
         return ResponseEntity.ok(roleService.create(dto));
@@ -34,6 +39,16 @@ public class RoleController {
     @PutMapping("/{id}")
     public ResponseEntity<RoleDTO> update(@PathVariable int id, @Valid @RequestBody RoleDTO dto) {
         return ResponseEntity.ok(roleService.update(id, dto));
+    }
+
+    @PostMapping("/{idRole}/permissions/{idPermission}")
+    public ResponseEntity<RoleDTO> ajouterPermission(@PathVariable int idRole, @PathVariable int idPermission) {
+        return ResponseEntity.ok(roleService.ajouterPermission(idRole, idPermission));
+    }
+
+    @DeleteMapping("/{idRole}/permissions/{idPermission}")
+    public ResponseEntity<RoleDTO> retirerPermission(@PathVariable int idRole, @PathVariable int idPermission) {
+        return ResponseEntity.ok(roleService.retirerPermission(idRole, idPermission));
     }
 
     @DeleteMapping("/{id}")
