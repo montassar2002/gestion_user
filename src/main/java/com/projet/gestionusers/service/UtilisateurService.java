@@ -108,7 +108,12 @@ public class UtilisateurService {
     public void delete(int id) {
         Utilisateur u = utilisateurRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        saveHistorique(u, "DELETE_USER");
+        
+        // Supprimer d'abord l'historique lié à cet utilisateur
+        List<HistoriqueAction> historiques = historiqueRepository.findByUtilisateurIdUtilisateur(id);
+        historiqueRepository.deleteAll(historiques);
+        
+        // Ensuite supprimer l'utilisateur
         utilisateurRepository.deleteById(id);
     }
 
