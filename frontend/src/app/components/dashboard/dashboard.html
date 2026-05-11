@@ -1,1 +1,40 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+  <h2 class="mb-4">📊 Dashboard</h2>
+  <div class="row mt-3">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary shadow">
+        <div class="card-body text-center">
+          <h3>{{ totalUtilisateurs }}</h3>
+          <p>Total Utilisateurs</p>
+          <a routerLink="/utilisateurs" class="btn btn-light btn-sm">Voir</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success shadow">
+        <div class="card-body text-center">
+          <h3>{{ totalActifs }}</h3>
+          <p>Utilisateurs Actifs</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning shadow">
+        <div class="card-body text-center">
+          <h3>{{ totalRoles }}</h3>
+          <p>Rôles</p>
+          <a routerLink="/roles" class="btn btn-light btn-sm">Voir</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-info shadow">
+        <div class="card-body text-center">
+          <h3>{{ totalPermissions }}</h3>
+          <p>Permissions</p>
+          <a routerLink="/permissions" class="btn btn-light btn-sm">Voir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
