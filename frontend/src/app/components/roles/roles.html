@@ -1,1 +1,59 @@
-<p>roles works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gestion des Rôles</h2>
+    <button class="btn btn-primary" (click)="openForm()">+ Ajouter</button>
+  </div>
+
+  <div class="card mb-4" *ngIf="showForm">
+    <div class="card-header bg-primary text-white">
+      {{ isEdit ? 'Modifier' : 'Ajouter' }} Rôle
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Nom</label>
+        <input type="text" class="form-control" [(ngModel)]="form.nom">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="form.description">
+      </div>
+      <button class="btn btn-success me-2" (click)="saveRole()">Enregistrer</button>
+      <button class="btn btn-secondary" (click)="cancel()">Annuler</button>
+    </div>
+  </div>
+
+  <table class="table table-bordered table-hover shadow">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Permissions</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of roles">
+        <td>{{ r.idRole }}</td>
+        <td>{{ r.nom }}</td>
+        <td>{{ r.description }}</td>
+        <td>
+          <span *ngFor="let p of r.permissions"
+            class="badge bg-info me-1">
+            {{ p.nom }}
+            <span style="cursor:pointer" (click)="retirerPermission(r.idRole, p.idPermission)"> ✕</span>
+          </span>
+          <select class="form-select form-select-sm mt-1"
+            (change)="ajouterPermission(r.idRole, $event)">
+            <option value="">+ Ajouter permission</option>
+            <option *ngFor="let p of permissions" [value]="p.idPermission">{{ p.nom }}</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" (click)="editRole(r)">Modifier</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteRole(r.idRole)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

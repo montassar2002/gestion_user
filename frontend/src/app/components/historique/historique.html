@@ -1,1 +1,21 @@
-<p>historique works!</p>
+<div class="container mt-4">
+  <h2>Historique des Actions</h2>
+  <table class="table table-bordered table-hover shadow mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Utilisateur</th>
+        <th>Action</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let h of historique">
+        <td>{{ h.idHistorique }}</td>
+        <td>{{ h.utilisateur?.nom }}</td>
+        <td><span class="badge bg-secondary">{{ h.action }}</span></td>
+        <td>{{ h.date | date:'dd/MM/yyyy HH:mm' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,1 +1,85 @@
-<p>utilisateurs works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2> Gestion des Utilisateurs</h2>
+    <button class="btn btn-primary" (click)="openForm()">+ Ajouter</button>
+  </div>
+
+  <div class="input-group mb-3 w-50">
+    <input type="text" class="form-control" placeholder="Rechercher par nom..."
+      [(ngModel)]="recherche" (input)="rechercher()">
+  </div>
+
+  <div class="card mb-4" *ngIf="showForm">
+    <div class="card-header bg-primary text-white">
+      {{ isEdit ? 'Modifier' : 'Ajouter' }} Utilisateur
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Nom</label>
+          <input type="text" class="form-control" [(ngModel)]="form.nom">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [(ngModel)]="form.email">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Mot de passe</label>
+          <input type="password" class="form-control" [(ngModel)]="form.motDePasse">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Rôle</label>
+          <select class="form-select" [(ngModel)]="form.role.idRole">
+            <option *ngFor="let r of roles" [value]="r.idRole">{{ r.nom }}</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="form.actif">
+            <label class="form-check-label">Actif</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-success me-2" (click)="saveUtilisateur()">Enregistrer</button>
+      <button class="btn btn-secondary" (click)="cancel()">Annuler</button>
+    </div>
+  </div>
+
+  <table class="table table-bordered table-hover shadow">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of utilisateurs">
+        <td>{{ u.idUtilisateur }}</td>
+        <td>{{ u.nom }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role?.nom }}</td>
+        <td>
+          <span class="badge"
+            [class.bg-success]="u.actif"
+            [class.bg-danger]="!u.actif">
+            {{ u.actif ? 'Actif' : 'Inactif' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" (click)="editUtilisateur(u)">Modifier</button>
+          <button class="btn btn-sm me-1"
+            [class.btn-secondary]="u.actif"
+            [class.btn-success]="!u.actif"
+            (click)="toggleActif(u.idUtilisateur)">
+            {{ u.actif ? 'Désactiver' : 'Activer' }}
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="deleteUtilisateur(u.idUtilisateur)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UtilisateurService } from '../../services/utilisateur';
@@ -20,21 +20,38 @@ export class Dashboard implements OnInit {
   constructor(
     private utilisateurService: UtilisateurService,
     private roleService: RoleService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.utilisateurService.getAll().subscribe(data => {
-      this.totalUtilisateurs = data.length;
+    this.loadData();
+  }
+
+  loadData() {
+    this.utilisateurService.getAll().subscribe({
+      next: (data) => {
+        this.totalUtilisateurs = data.length;
+        this.totalActifs = data.filter((u: any) => u.actif).length;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log('Erreur utilisateurs:', err)
     });
-    this.utilisateurService.getActifs().subscribe(data => {
-      this.totalActifs = data.length;
+
+    this.roleService.getAll().subscribe({
+      next: (data) => {
+        this.totalRoles = data.length;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log('Erreur roles:', err)
     });
-    this.roleService.getAll().subscribe(data => {
-      this.totalRoles = data.length;
-    });
-    this.permissionService.getAll().subscribe(data => {
-      this.totalPermissions = data.length;
+
+    this.permissionService.getAll().subscribe({
+      next: (data) => {
+        this.totalPermissions = data.length;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log('Erreur permissions:', err)
     });
   }
 }
