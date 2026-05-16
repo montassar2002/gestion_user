@@ -54,7 +54,7 @@ public class UtilisateurController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('CREATE_USERS')")
+    
     public ResponseEntity<UtilisateurDTO> create(@Valid @RequestBody UtilisateurDTO dto) {
         return ResponseEntity.ok(utilisateurService.create(dto));
     }

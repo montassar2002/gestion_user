@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-historique',
@@ -21,7 +22,7 @@ export class Historique implements OnInit {
   }
 
   loadHistorique() {
-    this.http.get<any[]>('http://localhost:8081/api/historique').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/historique`).subscribe({
       next: (data) => {
         this.historique = data;
         this.cdr.detectChanges();
